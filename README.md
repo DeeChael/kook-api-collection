@@ -14,10 +14,10 @@
 
 | Name        | Type | Is Required | Description                                                  |
 | ----------- | ---- | ----------- | ------------------------------------------------------------ |
-| icon        | str  | unknown     | the icon of the guild, maybe it is a url of image            |
+| icon        | str  | yes         | the icon of the guild, maybe it is a url of image            |
 | name        | str  | yes         | the name of the server                                       |
-| region      | str  | unknown     | the region of the server, it is an enum, but I only know there is value named "chengdu" |
-| template_id | int  | unknown     | the id of the template which you want to use                 |
+| region      | str  | no          | the region of the server, it is an enum, but I only know there is value named "chengdu", default as "beijing" |
+| template_id | int  | no          | the id of the template which you want to use, default as 0   |
 
 **Response**:
 
@@ -68,6 +68,26 @@ you should be the master of the guild
 | Name     | Type | Is Required | Description         |
 | -------- | ---- | ----------- | ------------------- |
 | guild_id | str  | yes         | the id of the guild |
+
+### Update guild
+
+**URL**: https://www.kookapp.cn/api/v3/guild/update
+
+**Method**: POST
+
+**Params**:
+
+| Name                                        | Type | Is Required | Description                      |
+| ------------------------------------------- | ---- | ----------- | -------------------------------- |
+| guild_id                                    | str  | yes         | the id of the guild              |
+| name                                        | str  | no          | the new name of the guild        |
+| region                                      | str  | no          | the new region of the guild      |
+| default_channel_id_setting (haven't proved) | str  | no          | the default channel of the guild |
+| welcome_channel_id (haven't proved)         | str  | no          | the welcome channel of the guild |
+| notify_type (haven't proved)                | int  | no          | notification type                |
+| enable_open (haven't proved)                | int  | no          | open: 1, close: 0                |
+| enable_widget (haven't proved)              | int  | no          | enable: 1, disable: 0            |
+| widget_invite_channel_id (haven't proved)   | str  | no          | the invite channel id of widget  |
 
 ### Get available regions v2
 
@@ -240,3 +260,63 @@ this is an existed interface, but missing two params
 | ------ | ------- | ----------- | ------------------------------------------------------------ |
 | id     | str     | yes         | the id of the friend request which you can get from List friends v3 api |
 | accept | boolean | yes         | True: accept, False: deny                                    |
+
+## Guild Security
+
+### Update
+
+**URL**: https://www.kookapp.cn/api/v3/guild-security/update
+
+**Method**: POST
+
+**Params**:
+
+| Name     | Type    | Is Required | Description                 |
+| -------- | ------- | ----------- | --------------------------- |
+| guild_id | str     | yes         | the id of the guild         |
+| id       | str     | yes         | the id of the security rule |
+| switch   | boolean | yes         | on or off                   |
+
+## Coupon
+
+### Exchange
+
+**URL**: https://www.kookapp.cn/api/v3/coupon/exchange
+
+**Method**: POST
+
+**Params**:
+
+| Name | Type | Is Required | Description      |
+| ---- | ---- | ----------- | ---------------- |
+| code | str  | yes         | the code of item |
+
+## Guild Boost
+
+### Get unused boost number
+
+**URL**: https://www.kookapp.cn/api/v3/guild-boost/get-unused-boost-num
+
+**Method**: GET
+
+**Response**:
+
+| Name             | Type | Description         |
+| ---------------- | ---- | ------------------- |
+| unused_boost_num | int  | unused boost number |
+
+## Boost
+
+### Use boost
+
+**URL**: https://www.kookapp.cn/api/v3/boost/use
+
+**Method**: POST	
+
+**Response**:
+
+| Name     | Type | Description            |
+| -------- | ---- | ---------------------- |
+| guild_id | str  | the id of guild        |
+| count    | int  | how many boosts to use |
+
