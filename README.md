@@ -69,7 +69,7 @@ you should be the master of the guild
 | -------- | ---- | ----------- | ------------------- |
 | guild_id | str  | yes         | the id of the guild |
 
-### Get available regions
+### Get available regions v2
 
 the response of v2 apis is different from v3, it is not formated as {"code": x, "message": "xxx", "data": data}
 it responds a array of regions directly
@@ -77,6 +77,26 @@ it responds a array of regions directly
 **URL**: https://www.kookapp.cn/api/v2/guilds/regions
 
 **Method**: GET
+
+### Get available regions v3 (pageable api)
+
+**URL**: https://www.kookapp.cn/api/v3/guild/regions
+
+**Method**: GET
+
+**Response**:
+
+| Name         | Type          | Description                  |
+| ------------ | ------------- | ---------------------------- |
+| items        | array<Region> | regions                      |
+| sort         | array         | i dont know                  |
+| meta         | object        | page meta                    |
+| » page       | int           | the page                     |
+| » page_total | int           | total pages                  |
+| » page_size  | int           | how many regions in one page |
+| » total      | int           | total regions                |
+
+
 
 **Region**:
 
