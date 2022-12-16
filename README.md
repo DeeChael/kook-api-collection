@@ -301,9 +301,9 @@ this is an existed interface, but missing two params
 
 **Response**:
 
-| Name             | Type | Description         |
-| ---------------- | ---- | ------------------- |
-| unused_boost_num | int  | unused boost number |
+| Name             | Type  | Description         |
+| ---------------- | ----- | ------------------- |
+| unused_boost_num | int、 | unused boost number |
 
 ## Boost
 
@@ -319,4 +319,177 @@ this is an existed interface, but missing two params
 | -------- | ---- | ---------------------- |
 | guild_id | str  | the id of guild        |
 | count    | int  | how many boosts to use |
+
+## Message
+
+### Check Card
+
+**URL**: https://www.kookapp.cn/api/v3/message/check-card
+
+**Method**: POST
+
+**Params**:
+
+| Name    | Type | Is Required | Description                    |
+| ------- | ---- | ----------- | ------------------------------ |
+| content | str  | yes         | the string of the card message |
+
+**Response**:
+
+The card message is good
+
+| Name           | Type               | Description                                |
+| -------------- | ------------------ | ------------------------------------------ |
+| mention        | object             | all the mentioned objects                  |
+| » mentions     | array<int>         | all mentioned user ids                     |
+| » mentionRoles | array<?>           | all mentioned role ids                     |
+| » mentionAll   | boolean            | is mentioning all                          |
+| » mentionHere  | boolean            | is mentioning here                         |
+| » mentionPart  | array<UserInfo>    | contains username, id, fullname and avatar |
+| » mentionPart  | array<RoleInfo>    | i dont know                                |
+| » navChannels  | array<?>           | i dont know                                |
+| » channelPart  | array<ChannelInfo> | i dont know                                |
+| » guildEmojis  | array<?>           | i dont know                                |
+| content        | str                | the string of the card message you send    |
+
+The card message is bad, the data will be a json array, which contains all the error messages
+Example:
+
+```json
+{
+    "code": 40000,
+    "message": "卡片消息json没有通过验证或者不存在",
+    "data": [
+        "[action-group]:Elements过多"
+    ]
+}
+```
+
+## Item
+
+### Use item
+
+**URL**: https://www.kookapp.cn/api/v3/item/using
+
+**Method**: POST
+
+**Params**:
+
+| Name         | Type | Is Required | Description |
+| ------------ | ---- | ----------- | ----------- |
+| user_item_id | int  | yes         | the item id |
+
+### Cancel use
+
+**URL**: https://www.kookapp.cn/api/v3/item/cancel-use
+
+**Method**: POST
+
+**Params**:
+
+| Name         | Type | Is Required | Description |
+| ------------ | ---- | ----------- | ----------- |
+| user_item_id | int  | yes         | the item id |
+
+### Delete items
+
+**URL**: https://www.kookapp.cn/api/v3/item/delete
+
+**Method**: POST
+
+**Params**:
+
+| Name          | Type       | Is Required | Description                    |
+| ------------- | ---------- | ----------- | ------------------------------ |
+| user_item_ids | array<int> | yes         | ids of the items to be deleted |
+
+### List items
+
+**URL**: https://www.kookapp.cn/api/v3/item/list
+
+**Method**: GET
+
+**Params**:
+
+| Name     | Type | Is Required | Description                         |
+| -------- | ---- | ----------- | ----------------------------------- |
+| category | str  | i dont know | all, time_limit, decoration, action |
+
+## Order
+
+### Create orders
+
+**URL**: https://www.kookapp.cn/api/v3/order/create
+
+**Method**: POST
+
+**Params**:
+
+| Name        | Type               | Is Required | Description               |
+| ----------- | ------------------ | ----------- | ------------------------- |
+| products    | array<ProductInfo> | yes         | the products to buy       |
+| » id        | int                | yes         | the id of the product     |
+| » count     | int                | yes         | how many to buy           |
+| platform    | ?                  | ?           | i dont know, default is 1 |
+| request_pay | boolean            | ?           | true to pay               |
+
+**Response**:
+
+| Name               | Type           | Description                                                  |
+| ------------------ | -------------- | ------------------------------------------------------------ |
+| id                 | str            | the id of the order                                          |
+| status             | int            | i dont know                                                  |
+| user_id            | str            | the user who is ordering                                     |
+| total_fee          | int            | the total price need be paid, divided by 100 to convert to CNY |
+| pay_fee            | int            | maybe same as total_fee, i dont know                         |
+| paid               | boolean        | is this order paid                                           |
+| pay_time           | int            | when you create the payment                                  |
+| create_time        | int            | when you create this order                                   |
+| products           | array<Product> | all products will be paid                                    |
+| usage_info         | str            | i dont know                                                  |
+| item_entities_desc | str            | the description of the items being paid?                     |
+| paydata            | object         | payment data                                                 |
+| » id               | str            | the id of the payment                                        |
+| » pay_fee          | str            | how many CNY you need pay, should be divided by 100          |
+| » qr_code          | str            | weixin qr code link, using wechat payment                    |
+| » qr_code_url      | str            | qr code link with kook server                                |
+| » expired_time     | int            | when the payment will expire                                 |
+| » mobile_pay       | str            | i dont know                                                  |
+
+Product
+
+| Name                | Type       | Description                      |
+| ------------------- | ---------- | -------------------------------- |
+| id                  | int        | i dont know                      |
+| item_id             | int        | i dont know                      |
+| item                | object     | i dont know                      |
+| » id                | int        | i dont know, same as item_id     |
+| » name              | str        | the name of the item             |
+| » desc              | str        | the description of the item      |
+| » cd                | int        | i dont know                      |
+| » categories        | array<str> | all the categories it belongs to |
+| » label             | int        | i dont know                      |
+| » label_name        | str        | i dont know                      |
+| » quality           | int        | i dont know                      |
+| » icon              | str        | the icon url                     |
+| » icon_thumb        | str        | i dont know                      |
+| » icon_expired      | str        | i dont know                      |
+| » quality_resource  | object     | i dont know                      |
+| » » color           | str        | i dont know                      |
+| » » small           | str        | image url                        |
+| » » big             | str        | image url                        |
+| » resources         | object     | i dont know                      |
+| » » gif             | str        | git image url                    |
+| » » height          | int        | height                           |
+| » » pag             | str        | image url                        |
+| » » percent         | int        | i dont know                      |
+| » » preview         | str        | image url                        |
+| » » preview_expired | str        | i dont know                      |
+| » » time            | int        | i dont know                      |
+| » » type            | str        | i dont know                      |
+| » » webp            | str        | i dont know                      |
+| » » width           | int        | width                            |
+| » position          | str        | i dont know                      |
+| total               | int        | amount of items to buy           |
+| expire_time         | int        | when the order expires           |
 
