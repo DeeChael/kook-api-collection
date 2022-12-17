@@ -36,7 +36,7 @@ class VoiceChannelConnection(Requestable):
 
     streaming: bool = False
 
-    next = None
+    next: bytes = None
 
     def __init__(self, bot: Bot, gateway_url: str):
         self._bot = bot
@@ -142,23 +142,28 @@ class VoiceChannelConnection(Requestable):
             .run_async(pipe_stdin=True)
 
     async def _play(self):
+        empty_bytes = bytes(256)
         while True:
             fk = False
             while True:
                 if self.next is not None:
-                    file_size = os.path.getsize(self.next)
-                    with open(self.next, 'rb') as audio:
-                        music = audio.read()
+                    file_size = len(self.next)
+                    music = self.next
                     self.next = None
-                    for i in range(file_size // 128 if file_size % 128 == 0 else (file_size // 128) + 1):
+                    for i in range(file_size // 256 if file_size % 256 == 0 else (file_size // 256) + 1):
+                        self._process.stdin.write(music[i * 256:min((i + 1) * 256, file_size)])
                         if self.next is not None:
                             fk = True
                             break
-                        self._process.stdin.write(music[i * 128:min((i + 1) * 128, file_size)])
-                        await asyncio.sleep(0.001)
+                        elif not self.streaming:
+                            break
+                        await asyncio.sleep(0.0019)
                     if fk:
                         break
-                await asyncio.sleep(0.1)
+                else:
+                    if self._process is not None:
+                        self._process.stdin.write(empty_bytes)
+                    await asyncio.sleep(0.002)
 
     async def _consume_produce(self, data):
         logging.info(f'ssrc=1357 ffmpeg rtp url: rtp://{self.rtp_ip}:{self.rtp_port}?rtcpport={self.rtcp_port}')
@@ -175,8 +180,16 @@ class VoiceChannelConnection(Requestable):
         else:
             logging.debug(data)
 
-    async def stream(self, file: str):
-        self.next = file
+    async def stream(self, file: Union[str, bytes, IO]):
+        self.streaming = True
+        if isinstance(file, str):
+            with open(file, 'rb') as audio:
+                self.next = audio.read()
+        elif isinstance(file, bytes):
+            self.next = file
+        elif isinstance(file, IO):
+            self.next = file.read()
+
         # self._stdin.write(f'-i {file}')
         ...
 
@@ -184,7 +197,7 @@ class VoiceChannelConnection(Requestable):
         # TODO
         # if self.streaming:
         #     self._process.communicate('q')
-        # self.streaming = False
+        self.streaming = False
         ...
 
     async def _create_popon(self,
