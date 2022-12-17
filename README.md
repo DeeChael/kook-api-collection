@@ -126,6 +126,30 @@ it responds a array of regions directly
 | name     | str  | the name of the region |
 | crowding | int  | percentage of using    |
 
+### Join Guild
+
+**URL**: https://www.kookapp.cn/api/v3/guild/join
+
+**Method**: GET (WTF, kook should fix this)
+
+**Params**:
+
+| Name | Type | Is Required | Description                  |
+| ---- | ---- | ----------- | ---------------------------- |
+| code | str  | no          | the invite code of the guild |
+| id   | str  | no          | the id of the guild          |
+
+You must fill one of code or id
+
+**Response**:
+
+If joined, will cause HTTP 500 (Kook should fix this bug)
+
+| Name   | Type         | Description |
+| ------ | ------------ | ----------- |
+| joined | boolean      | as its name |
+| guild  | guild object | guild info  |
+
 ## Channel
 
 ### Update channel
@@ -415,6 +439,26 @@ Example:
 | -------- | ---- | ----------- | ----------------------------------- |
 | category | str  | i dont know | all, time_limit, decoration, action |
 
+## Bag
+
+**URL**: https://www.kookapp.cn/api/v3/item/bag
+
+**Method**: GET
+
+**Response**:
+
+| Name           | Type | Description              |
+| -------------- | ---- | ------------------------ |
+| id             | str  | the id of the item       |
+| status         | int  | i dont know              |
+| type           | int  | i dont know              |
+| name           | str  | the name of the item     |
+| price          | int  | should be divided by 100 |
+| origin_price   | int  | should be divided by 100 |
+| service_time   | int  | i dont know              |
+| discount_label | str  | discount string          |
+| iap_code       | str  | i dont know              |
+
 ## Order
 
 ### Create orders
@@ -493,3 +537,23 @@ Product
 | total               | int        | amount of items to buy           |
 | expire_time         | int        | when the order expires           |
 
+## User
+
+### Update self info
+
+**URL**: https://www.kookapp.cn/api/v3/user/update
+
+**Method**: POST
+
+**Params**:
+
+| Name          | Type | Is Required | Description                                                  |
+| ------------- | ---- | ----------- | ------------------------------------------------------------ |
+| username      | str  | no          | new username, length must be larger than 2                   |
+| identify_num  | str  | no          | new identify number                                          |
+| avatar        | str  | no          | the base64 of the image (data:image/png;base64,{base64 value}) |
+| banner        | str  | no          | the link of the image                                        |
+| mobile        | str  | no          | new mobile phone number                                      |
+| mobile_prefix | str  | no          | new mobile phone prefix                                      |
+| password      | str  | no          | new password                                                 |
+| verify_code   | str  | no          | verify code                                                  |
