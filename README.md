@@ -182,6 +182,27 @@ this is an existed interface, but missing two params
 | channel_id | str  | yes         | the id of the voice channel                            |
 | user_id    | str  | yes         | which user you want to kick out from the voice channel |
 
+### Synchronize channel permission
+
+**URL**: https://www.kookapp.cn/api/v3/channel-role/sync
+
+**Method**: POST
+
+**Params**:
+
+| Name       | Type | Is Required | Description           |
+| ---------- | ---- | ----------- |-----------------------|
+| channel_id | str  | yes         | the id of the channel |
+
+**Response**:
+
+Data structures of following fields are the same as [official docs](https://developer.kookapp.cn/doc/http/channel#%E9%A2%91%E9%81%93%E8%A7%92%E8%89%B2%E6%9D%83%E9%99%90%E8%AF%A6%E6%83%85)
+
+| Name                  | Type                           | Description                        |
+|-----------------------|--------------------------------|------------------------------------|
+| permission_overwrites | array<RolePermissionOverwrite> | info of role permission overwrites |
+| permission_users      | array<UserPermissionOverwrite> | info of user permission overwrites |
+
 ## Gateway
 
 ### Voice channel
