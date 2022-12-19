@@ -77,17 +77,18 @@ you should be the master of the guild
 
 **Params**:
 
-| Name                                        | Type | Is Required | Description                      |
-| ------------------------------------------- | ---- | ----------- | -------------------------------- |
-| guild_id                                    | str  | yes         | the id of the guild              |
-| name                                        | str  | no          | the new name of the guild        |
-| region                                      | str  | no          | the new region of the guild      |
-| default_channel_id_setting (haven't proved) | str  | no          | the default channel of the guild |
-| welcome_channel_id (haven't proved)         | str  | no          | the welcome channel of the guild |
-| notify_type (haven't proved)                | int  | no          | notification type                |
-| enable_open (haven't proved)                | int  | no          | open: 1, close: 0                |
-| enable_widget (haven't proved)              | int  | no          | enable: 1, disable: 0            |
-| widget_invite_channel_id (haven't proved)   | str  | no          | the invite channel id of widget  |
+| Name                                      | Type | Is Required | Description                      |
+| ----------------------------------------- | ---- | ----------- | -------------------------------- |
+| guild_id                                  | str  | yes         | the id of the guild              |
+| name **(not work)**                       | str  | no          | the new name of the guild        |
+| region                                    | str  | no          | the new region of the guild      |
+| default_channel_id (haven't proved)       | str  | no          | the default channel of the guild |
+| default_channel_id_setting                | str  | no          | i dont know                      |
+| welcome_channel_id                        | str  | no          | the welcome channel of the guild |
+| notify_type **(not work)**                | int  | no          | notification type                |
+| enable_open                               | int  | no          | open: 1, close: 0                |
+| enable_widget **(not work)**              | int  | no          | enable: 1, disable: 0            |
+| widget_invite_channel_id (haven't proved) | str  | no          | the invite channel id of widget  |
 
 ### Get available regions v2
 
