@@ -163,10 +163,11 @@ this is an existed interface, but missing two params
 
 **Missing params**:
 
-| Name         | Type    | Is Required                 | Description                       |
-| ------------ | ------- | --------------------------- | --------------------------------- |
-| has_password | unknown | no                          | if the voice channel has password |
-| password     | str     | yes if has password is true | the password of the voice channel |
+| Name          | Type    | Is Required  | Description                                                                   |
+|---------------|---------|--------------|-------------------------------------------------------------------------------|
+| voice_quality | int     | no           | the voice quality that the clients in this voice channel are requested to use |
+| limit_amount  | int     | no           | the maximum number of users that can be present in the channel                |
+| password      | str     | no           | the password of the channel, or empty string if clearing the password         |
 
 **Response**: [See official docs](https://developer.kookapp.cn/doc/http/channel#%E7%BC%96%E8%BE%91%E9%A2%91%E9%81%93)
 
